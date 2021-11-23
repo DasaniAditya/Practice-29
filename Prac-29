@@ -1,0 +1,75 @@
+// Simple Bank System
+
+class Bank {
+    HashMap<Integer, Long> map;
+    public Bank(long[] balance) {
+        int i = 1;
+        map = new HashMap<>();
+        for(long b : balance) {
+            map.put(i++, b);
+        }
+    }
+    
+    public boolean transfer(int account1, int account2, long money) {
+        if(!map.containsKey(account1) || !map.containsKey(account2)) {
+            return false;
+        }
+        long current = map.get(account1);
+        
+        if(current < money) {
+            return false;
+        }
+        map.put(account1, current - money);
+        map.put(account2, map.get(account2) + money);
+        return true;
+    }
+    
+    public boolean deposit(int account, long money) {
+        if(!map.containsKey(account)) {
+            return false;
+        }
+        map.put(account, map.get(account) + money);
+        return true;
+    }
+    
+    public boolean withdraw(int account, long money) {
+        if(!map.containsKey(account) || map.get(account) < money) {
+            return false;
+        } else {
+            map.put(account, map.get(account) - money);
+            return true;
+        }
+        
+    }
+}
+
+/**
+ * Your Bank object will be instantiated and called as such:
+ * Bank obj = new Bank(balance);
+ * boolean param_1 = obj.transfer(account1,account2,money);
+ * boolean param_2 = obj.deposit(account,money);
+ * boolean param_3 = obj.withdraw(account,money);
+ */
+
+ //Check if Numbers Are Ascending in a Sentence
+
+ class Solution {
+    public boolean areNumbersAscending(String s) {
+        if(s == null || s.length() == 0) {
+            return true;
+        }
+        String[] parts = s.split(" ");
+        List<Integer> list = new ArrayList<>();
+        for(String part : parts) {
+            if(Character.isDigit(part.charAt(0))) {
+                list.add(Integer.parseInt(part));
+            }
+        }
+        for(int i = 0 ; i < list.size() - 1; i++) {
+            if(list.get(i) >= list.get(i+1)) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
